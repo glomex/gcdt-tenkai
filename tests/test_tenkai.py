@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function
 
-from gcdt.tenkai_core import _build_bundle_key
+from gcdt_tenkai.tenkai_core import _build_bundle_key
 
 from gcdt_testtools.helpers import temp_folder  # fixtures!
 

@@ -1,0 +1,118 @@
+swagger: '2.0'
+info:
+  title: tenkai config
+  description: Documentation of the config file format for `tenkai` (a gcdt tool).
+  version: 0.2.0
+
+paths:
+  /test:
+    get:
+      responses:
+        "200":
+          description:  success
+
+definitions:
+  tenkai:
+    description: 'The tenkai config is organized into the following structure:'
+    type: object
+    properties:
+      codedeploy:
+        description: 'configure codedeploy details'
+        $ref: '#/definitions/codedeploy'
+      bundling:
+        description: 'configure details regarding bundle artifact'
+        $ref: '#/definitions/bundling'
+      defaults:
+        description: 'finetune gcdt tool lifecycle (override at own risk)'
+        $ref: '#/definitions/defaults'
+    required:
+    #- bundling
+    - codedeploy
+    - defaults
+
+  codedeploy:
+    description: 'The `codedeploy` section.'
+    type: object
+    properties:
+      applicationName:
+        type: string
+      artifactsBucket:
+        description: 's3 bucket used to upload the artifact bundle'
+        type: string
+      deploymentConfigName:
+        type: string
+      deploymentGroupName:
+        type: string
+    required:
+    - applicationName
+    - deploymentConfigName
+    - deploymentGroupName
+    additionalProperties: false
+
+  bundling:
+    description: 'Configuration specific to the bundling phase.'
+    type: object
+    properties:
+      folders:
+        description: 'an array of folder items'
+        $ref: '#/definitions/folders'
+      zip:
+        description: 'filename for the artifact bundle (e.g. bundle.zip)'
+        type: string
+        default: bundle.zip
+    required:
+    - folders
+    - zip
+    additionalProperties: false
+
+  defaults:
+    type: object
+    description: 'Default properties to finetune gcdt tool lifecycle (override at own risk).'
+    properties:
+      validate:
+        type: boolean
+        description: 'validate the tool configuration against openapi spec.'
+        default: true
+      settings_file:
+        type: string
+        description: 'validate the tool configuration against openapi spec.'
+        default: 'settings.json'
+      stack_output_file:
+        type: string
+        description: 'validate the tool configuration against openapi spec.'
+        default: 'stack_output.yml'
+      log_group:
+        type: string
+        description: 'glomex specific configuration from baseami.'
+        default: '/var/log/messages'
+    required:
+    - validate
+    - settings_file
+    - stack_output_file
+    - log_group
+    additionalProperties: false
+
+  foldersItem:
+    type: object
+    properties:
+      source:
+        type: string
+        example: ./node_modules
+      target:
+        type: string
+        example: ./node_modules
+    required:
+    - source
+    #- target
+    additionalProperties: false
+
+  folders:
+    type: array
+    items:
+      $ref: '#/definitions/foldersItem'
+
+  top:
+    type: object
+    properties:
+      ramuda:
+        $ref: '#/definitions/tenkai'

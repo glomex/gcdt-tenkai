@@ -1,23 +1,21 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """The 'tenkai' tool is used to work with AWS CodeDeploy.
 """
-
 from __future__ import unicode_literals, print_function
 import os
 import sys
 
 import maya
+from gcdt import utils
+from gcdt.gcdt_defaults import DEFAULT_CONFIG
+from gcdt.s3 import prepare_artifacts_bucket
+from gcdt.gcdt_cmd_dispatcher import cmd
+from gcdt.utils import GracefulExit
+from gcdt.gcdt_logging import getLogger
+from gcdt import gcdt_lifecycle
 
-from . import utils
-from .gcdt_defaults import DEFAULT_CONFIG
 from .tenkai_core import deploy, output_deployment_status, stop_deployment, \
     output_deployment_summary, output_deployment_diagnostics
-from gcdt.s3 import prepare_artifacts_bucket
-from .gcdt_cmd_dispatcher import cmd
-from .utils import GracefulExit
-from .gcdt_logging import getLogger
-from . import gcdt_lifecycle
 
 
 log = getLogger(__name__)
@@ -47,7 +45,7 @@ def deploy_cmd(**tooldata):
     # in case we fail we limit log output to after start_time
     start_time = maya.now().datetime(naive=True)
     log_group = config.get('deployment', {}).get(
-        'LogGroup', DEFAULT_CONFIG['tenkai']['log_group'])
+        'LogGroup', config['defaults']['log_group'])
 
     prepare_artifacts_bucket(awsclient,
                              config['codedeploy'].get('artifactsBucket'))

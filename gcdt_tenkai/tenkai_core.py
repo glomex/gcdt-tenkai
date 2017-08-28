@@ -5,10 +5,9 @@ import time
 
 from clint.textui import colored
 from clint.packages.colorama import Fore
-
-from .s3 import upload_file_to_s3
-from .gcdt_logging import getLogger
-from .cloudwatch_logs import get_log_events, datetime_to_timestamp, \
+from gcdt.s3 import upload_file_to_s3
+from gcdt.gcdt_logging import getLogger
+from gcdt.cloudwatch_logs import get_log_events, datetime_to_timestamp, \
     check_log_stream_exists
 
 
