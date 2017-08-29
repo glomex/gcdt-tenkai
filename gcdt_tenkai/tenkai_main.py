@@ -7,7 +7,7 @@ import sys
 
 import maya
 from gcdt import utils
-from gcdt.gcdt_defaults import DEFAULT_CONFIG
+#from gcdt.gcdt_defaults import DEFAULT_CONFIG
 from gcdt.s3 import prepare_artifacts_bucket
 from gcdt.gcdt_cmd_dispatcher import cmd
 from gcdt.utils import GracefulExit
