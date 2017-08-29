@@ -7,7 +7,6 @@ import sys
 
 import maya
 from gcdt import utils
-#from gcdt.gcdt_defaults import DEFAULT_CONFIG
 from gcdt.s3 import prepare_artifacts_bucket
 from gcdt.gcdt_cmd_dispatcher import cmd
 from gcdt.utils import GracefulExit
@@ -49,14 +48,13 @@ def deploy_cmd(**tooldata):
 
     prepare_artifacts_bucket(awsclient,
                              config['codedeploy'].get('artifactsBucket'))
-    # TODO deprecate prebundle hook with reference to new signal-based-hooks
-    # TODO and move them to glomex_bundler
-    pre_bundle_scripts = config.get('preBundle', None)
-    if pre_bundle_scripts:
-        exit_code = utils.execute_scripts(pre_bundle_scripts)
-        if exit_code != 0:
-            log.error('Pre bundle script exited with error')
-            return 1
+    # prebundle hook with reference to new signal-based-hooks
+    #pre_bundle_scripts = config.get('preBundle', None)
+    #if pre_bundle_scripts:
+    #    exit_code = utils.execute_scripts(pre_bundle_scripts)
+    #    if exit_code != 0:
+    #        log.error('Pre bundle script exited with error')
+    #        return 1
 
     bucket = config['codedeploy'].get('artifactsBucket')
 
@@ -95,7 +93,6 @@ def bundle_cmd(**tooldata):
 
 
 def main():
-    # TODO: register bundle with bundle signals
     sys.exit(
         gcdt_lifecycle.main(DOC, 'tenkai',
                             dispatch_only=['version'])

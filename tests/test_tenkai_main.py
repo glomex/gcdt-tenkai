@@ -82,3 +82,8 @@ def test_bundle_cmd(logcapture):
     records = list(logcapture.actual())
     assert records[0][1] == 'INFO'
     assert records[0][2].startswith('created bundle at test_file')
+
+
+def test_hookfile():
+    # make sure this works with bundle (implement pre_bundle_scripts)
+    assert False
