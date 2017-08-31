@@ -114,5 +114,5 @@ definitions:
   top:
     type: object
     properties:
-      ramuda:
+      tenkai:
         $ref: '#/definitions/tenkai'
