@@ -3,7 +3,6 @@ from __future__ import unicode_literals, print_function
 import os
 import logging
 
-from nose.tools import assert_equal, assert_false
 import pytest
 from gcdt_bundler.bundler import bundle_revision
 from gcdt.utils import are_credentials_still_valid
@@ -43,7 +42,7 @@ def cleanup_stack_tenkai(awsclient):
     # cleanup
     exit_code = delete_stack(awsclient, config_sample_codeploy_stack)
     # check whether delete was completed!
-    assert_false(exit_code, 'delete_stack was not completed\n' +
+    assert not exit_code, ('delete_stack was not completed\n' +
                  'please make sure to clean up the stack manually')
 
 
@@ -56,13 +55,13 @@ def sample_codedeploy_app(awsclient):
     )
     exit_code = deploy_stack(awsclient, {}, config_sample_codeploy_stack,
                              cloudformation, override_stack_policy=False)
-    assert_equal(exit_code, 0)
+    assert exit_code == 0
 
     yield
     # cleanup
     exit_code = delete_stack(awsclient, config_sample_codeploy_stack)
     # check whether delete was completed!
-    assert_false(exit_code, 'delete_stack was not completed\n' +
+    assert not exit_code, ('delete_stack was not completed\n' +
                  'please make sure to clean up the stack manually')
 
 
@@ -76,7 +75,7 @@ def test_tenkai_exit_codes(cleanup_stack_tenkai, awsclient):
     )
     exit_code = deploy_stack(awsclient, {}, config_sample_codeploy_stack,
                              cloudformation, override_stack_policy=False)
-    assert_equal(exit_code, 0)
+    assert exit_code == 0
 
     stack_name = _get_stack_name(config_sample_codeploy_stack)
     stack_output = get_outputs_for_stack(awsclient, stack_name)
@@ -128,7 +127,7 @@ def test_output_deployment(cleanup_stack_tenkai, awsclient, logcapture):
     )
     exit_code = deploy_stack(awsclient, {}, config_sample_codeploy_stack,
                              cloudformation, override_stack_policy=False)
-    assert_equal(exit_code, 0)
+    assert exit_code == 0
 
     stack_name = _get_stack_name(config_sample_codeploy_stack)
     stack_output = get_outputs_for_stack(awsclient, stack_name)
