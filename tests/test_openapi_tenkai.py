@@ -30,13 +30,6 @@ def test_scaffolding_sample_min():
             'applicationName': u'string',
             'deploymentConfigName': u'string',
             'deploymentGroupName': u'string'
-        },
-
-        'defaults': {
-            'log_group': '/var/log/messages',
-            'settings_file': 'settings.json',
-            'stack_output_file': 'stack_output.yml',
-            'validate': True
         }
     }
 
